@@ -28,9 +28,10 @@ asmlinkage int new_open(const char __user *pathname, int flags, mode_t mode)
 
     if (!strstr(pathname, target_dir))
         return (*original_open)(pathname, flags, mode);
-    else{
+    else
+    {
         printk(KERN_ALERT "[+] target directory : %s\n", pathname);
-        printk(KERN_ALERT " [+] file ext : %s", check_fe());
+        printk(KERN_ALERT " [+] file ext : %s", check_fe(pathname));
     }
     return (*original_open)(pathname, flags, mode);
 }
@@ -72,7 +73,7 @@ static int __init lkm_init(void)
 
     // returned address of sys_call_table
     sys_call_table = (void *)kallsyms_lookup_name("sys_call_table");
-    
+
     {
         original_open = sys_call_table[__NR_open];
         sys_call_table[__NR_open] = new_open;
@@ -87,7 +88,7 @@ static void __exit lkm_exit(void)
 {
     printk(KERN_INFO "[+] exit LKM...\n");
     disable_page_protection();
-    
+
     {
         sys_call_table[__NR_open] = original_open;
     }

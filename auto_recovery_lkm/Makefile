@@ -22,3 +22,12 @@ start:
 remove:
 	sudo rm -rf /backup_dir
 	sudo rmmod result_lkm.ko
+
+restart:
+	sudo rm -rf /backup_dir
+	sudo rmmod result_lkm.ko
+	$(MAKE) -C $(KDIR) M=$(PWD) clean
+	sudo insmod result_lkm.ko
+	
+	# Display the kernel log
+	dmesg
