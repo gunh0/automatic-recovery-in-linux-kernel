@@ -1,5 +1,5 @@
 obj-m += result_lkm.o
-result_lkm-objs := main.o
+result_lkm-objs := main.o filename_extension_check.o
 
 KDIR := /lib/modules/$(shell uname -r)/build
 PWD := $(shell pwd)

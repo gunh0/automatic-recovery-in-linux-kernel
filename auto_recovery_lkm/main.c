@@ -5,6 +5,8 @@
 #include <linux/kernel.h>
 #include <linux/module.h>
 
+#include "filename_extension_check.h"
+
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("DevGun");
 MODULE_DESCRIPTION("Auto Backup Linux Kernel Module");
@@ -26,9 +28,10 @@ asmlinkage int new_open(const char __user *pathname, int flags, mode_t mode)
 
     if (!strstr(pathname, target_dir))
         return (*original_open)(pathname, flags, mode);
-    else
+    else{
         printk(KERN_ALERT "[+] target directory : %s\n", pathname);
-
+        printk(KERN_ALERT " [+] file ext : %s", check_fe());
+    }
     return (*original_open)(pathname, flags, mode);
 }
 
