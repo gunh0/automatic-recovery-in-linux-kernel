@@ -3,9 +3,68 @@ Ransomware Response Automatic Recovery Kernel Module
 
 <br/>
 
+### auto_recovery_lkm
+
+```bash
+# Start Module
+$ git clone https://github.com/devgunho/Automatic_Recovery_In_Linux.git
+$ cd auto_recovery_lkm
+$ make
+$ make start
+
+# Remove Module
+$ make remove
+```
+
+<br/>
+
+<br/>
+
+<br/>
+
+### Materials for project implementation
+
+- [Message logging with printk](#Message-logging-with-printk)
+- [Watchman](#Watchman)
+
+<br/>
+
+----
+
+<br/>
+
+### Message logging with printk
+
+The available log levels are:
+
+| Name         | String | Alias function                                    |
+| ------------ | ------ | ------------------------------------------------- |
+| KERN_EMERG   | “0”    | `pr_emerg()`                                      |
+| KERN_ALERT   | “1”    | `pr_alert()`                                      |
+| KERN_CRIT    | “2”    | `pr_crit()`                                       |
+| KERN_ERR     | “3”    | `pr_err()`                                        |
+| KERN_WARNING | “4”    | `pr_warn()`                                       |
+| KERN_NOTICE  | “5”    | `pr_notice()`                                     |
+| KERN_INFO    | “6”    | `pr_info()`                                       |
+| KERN_DEBUG   | “7”    | `pr_debug()` and `pr_devel()` if DEBUG is defined |
+| KERN_DEFAULT | “”     |                                                   |
+| KERN_CONT    | “c”    | `pr_cont()`                                       |
+
+The log level specifies the importance of a message.
+
+The kernel decides whether to show the message immediately (printing it to the current console) depending on its log level and the current *console_loglevel* (a kernel variable).
+
+If the message priority is higher (lower log level value) than the *console_loglevel* the message will be printed to the console.
+
+<br/>
+
+----
+
 <br/>
 
 ### Watchman
+
+![image](https://user-images.githubusercontent.com/41619898/91006040-513de780-e613-11ea-92d0-9477d35911ba.png)
 
 > Watchman is an open source and cross-platform file watching service that watches files and records or performs actions when they change.
 >
