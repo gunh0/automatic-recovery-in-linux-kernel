@@ -1,43 +1,5 @@
 #include "filename_extension_check.h"
 
-/*
-int strcmp(const char* s1, const char* s2)
-{
-    while(*s1 && (*s1==*s2))
-        s1++,s2++;
-    return *(const unsigned char*)s1-*(const unsigned char*)s2;
-}
-
-char *strpbrk(const char *cs, const char *ct)
-{
-    const char *sc1, *sc2;
-
-    for (sc1 = cs; *sc1 != '\0'; ++sc1) {
-        for (sc2 = ct; *sc2 != '\0'; ++sc2) {
-            if (*sc1 == *sc2)
-                return (char *)sc1;
-        }
-    }
-    return NULL;
-}
-
-char *strsep(char **s, const char *ct)
-{
-    char *sbegin = *s;
-    char *end;
-
-    if (sbegin == NULL)
-        return NULL;
-
-    end = strpbrk(sbegin, ct);
-    if (end)
-        *end++ = '\0';
-    *s = end;
-    return sbegin;
-}
-
-*/
-
 char *check_fe(char *file_path)
 {
     char *target_ext[] = {
@@ -61,29 +23,31 @@ char *check_fe(char *file_path)
         //media
         "mp4",
         "mkv"};
-    char *str_tok;
-    str_tok=strsep(&file_path,".");
-    str_tok=strsep(&file_path,".");
 
-    printk(KERN_ALERT "--[+] check array size : %d", (int)ARRAY_SIZE(target_ext));
+    char *str_tok=strsep(&file_path,".");
+    char *final_tok=NULL;
+    int iter = 0, flag=0;
 
-    printk(KERN_ALERT "---[*] check tok : %s", str_tok);
-    printk(KERN_ALERT "---[*] final tok : %s", str_tok);
-
-    // int tok_size = 0;
-    // tok_size = ARRAY_SIZE(str_tok);
-    // int iter = 0;
-
-    /*
-    if (!(str_tok))
+    while(str_tok!=NULL)
     {
-        for (iter = 0; iter < ARRAY_SIZE(target_ext); iter++)
-        {
-            if (strcmp((const char*)str_tok[tok_size - 1],(const char*)target_ext[iter]))
-                return target_ext[iter];
-        }
+        final_tok=str_tok;
+        //printk(KERN_ALERT "[*] check tok : %s", final_tok);
+        str_tok=strsep(&file_path,".");
     }
-    */
+    //printk(KERN_ALERT "[*] final tok : %s", final_tok);
 
-    return "no match...";
+
+    for(iter=0;iter<(int)ARRAY_SIZE(target_ext);iter++)
+    {
+        //printk(KERN_ALERT "[*] compare %s , %s",final_tok,target_ext[iter]);
+        if(strcmp(target_ext[iter],final_tok)==0)
+            flag=1;
+            break;
+    }
+
+    if(flag==1)
+    {
+        return final_tok;
+    }
+    return NULL;
 }

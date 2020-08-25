@@ -10,8 +10,5 @@
 #endif
 
 char *check_fe(char *file_path);
-//char *strsep(char **s, const char *ct);
-//char *strpbrk(const char *cs, const char *ct);
-// int strcmp(const char* s1, const char* s2);
 
 #endif
