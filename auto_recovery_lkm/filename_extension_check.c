@@ -61,13 +61,14 @@ char *check_fe(char *file_path)
         //media
         "mp4",
         "mkv"};
-    char *str_tok = strsep(&file_path, ".");
+    char *str_tok;
 
     printk(KERN_ALERT "--[+] check array size : %d", (int)ARRAY_SIZE(target_ext));
 
-    // ERR... VM not starting...
-    str_tok = strsep(&file_path, ".");
-    printk(KERN_ALERT "---[*] check tok : %s", str_tok);
+    while((str_tok=strsep(&file_path,".")!=NULL){
+        printk(KERN_ALERT "---[*] check tok : %s", str_tok);
+    }
+    printk(KERN_ALERT "---[*] final tok : %s", str_tok);
 
     // int tok_size = 0;
     // tok_size = ARRAY_SIZE(str_tok);
@@ -84,5 +85,5 @@ char *check_fe(char *file_path)
     }
     */
 
-    return "--[*] no match...";
+    return "no match...";
 }
