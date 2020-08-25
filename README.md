@@ -3,11 +3,20 @@ Ransomware Response Automatic Recovery Kernel Module
 
 <br/>
 
+### My Env.
+
+**VirtualBox 6.1.12 r139181**
+
+**CentOS Linux release 7.8.2003 (Core)**
+
+<br/>
+
 ### auto_recovery_lkm
 
 ```bash
 # Start Module
 $ git clone https://github.com/devgunho/Automatic_Recovery_In_Linux.git
+$ cd Automatic_Recovery_In_Linux
 $ cd auto_recovery_lkm
 $ make
 $ make start
