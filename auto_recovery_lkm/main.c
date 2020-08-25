@@ -31,7 +31,7 @@ asmlinkage int new_open(const char __user *pathname, int flags, mode_t mode)
     else
     {
         printk(KERN_ALERT "[+] target directory : %s\n", pathname);
-        printk(KERN_ALERT " [+] file ext : %s", check_fe(pathname));
+        printk(KERN_ALERT "-[+] file ext : %s", check_fe((char *)pathname));
     }
     return (*original_open)(pathname, flags, mode);
 }

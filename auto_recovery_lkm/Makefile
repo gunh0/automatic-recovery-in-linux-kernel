@@ -27,6 +27,8 @@ restart:
 	sudo rm -rf /backup_dir
 	sudo rmmod result_lkm.ko
 	$(MAKE) -C $(KDIR) M=$(PWD) clean
+	$(MAKE) -C $(KDIR) M=$(PWD) modules
+	sudo mkdir -p \/backup_dir
 	sudo insmod result_lkm.ko
 	
 	# Display the kernel log

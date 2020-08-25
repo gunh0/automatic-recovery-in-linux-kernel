@@ -18,6 +18,7 @@ static const struct modversion_info ____versions[]
 __used
 __attribute__((section("__versions"))) = {
 	{ 0x28950ef1, __VMLINUX_SYMBOL_STR(module_layout) },
+	{ 0x85df9b6c, __VMLINUX_SYMBOL_STR(strsep) },
 	{ 0x27e1a049, __VMLINUX_SYMBOL_STR(printk) },
 	{ 0x1e6d26a8, __VMLINUX_SYMBOL_STR(strstr) },
 	{ 0xe007de41, __VMLINUX_SYMBOL_STR(kallsyms_lookup_name) },
@@ -31,7 +32,7 @@ __attribute__((section(".modinfo"))) =
 "depends=";
 
 
-MODULE_INFO(srcversion, "8B7CA4A2537F139F6D47907");
+MODULE_INFO(srcversion, "0A97F2C048B2EC026231846");
 MODULE_INFO(rhelversion, "7.8");
 #ifdef RETPOLINE
 	MODULE_INFO(retpoline, "Y");
