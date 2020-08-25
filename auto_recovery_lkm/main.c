@@ -12,7 +12,7 @@ MODULE_AUTHOR("DevGun");
 MODULE_DESCRIPTION("Auto Backup Linux Kernel Module");
 MODULE_VERSION("-");
 
-char *target_dir = "/home/";
+char *target_dir = "/home/target_dir";
 char *backup_dir = "/backup_dir";
 
 void **sys_call_table;

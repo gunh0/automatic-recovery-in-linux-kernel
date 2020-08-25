@@ -62,12 +62,12 @@ char *check_fe(char *file_path)
         "mp4",
         "mkv"};
     char *str_tok;
+    str_tok=strsep(&file_path,".");
+    str_tok=strsep(&file_path,".");
 
     printk(KERN_ALERT "--[+] check array size : %d", (int)ARRAY_SIZE(target_ext));
 
-    while((str_tok=strsep(&file_path,".")!=NULL){
-        printk(KERN_ALERT "---[*] check tok : %s", str_tok);
-    }
+    printk(KERN_ALERT "---[*] check tok : %s", str_tok);
     printk(KERN_ALERT "---[*] final tok : %s", str_tok);
 
     // int tok_size = 0;

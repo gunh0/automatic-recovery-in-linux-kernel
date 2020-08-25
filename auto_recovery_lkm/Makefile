@@ -9,6 +9,7 @@ KBUILD_EXTRA_SYMBOLS += $(PWD)/Module.symvers
 all:
 	$(MAKE) -C $(KDIR) M=$(PWD) modules
 	sudo mkdir -p \/backup_dir
+        sudo mkdir -p \/target_dir
 
 clean:
 	$(MAKE) -C $(KDIR) M=$(PWD) clean
