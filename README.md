@@ -3,7 +3,9 @@ Ransomware Response Automatic Recovery Kernel Module
 
 <br/>
 
-### My Env.
+<br/>
+
+### # My Env.
 
 **VirtualBox 6.1.12 r139181**
 
@@ -11,7 +13,9 @@ Ransomware Response Automatic Recovery Kernel Module
 
 <br/>
 
-### auto_recovery_lkm
+<br/>
+
+### # auto_recovery_lkm Install
 
 ```bash
 # Start Module
@@ -29,9 +33,75 @@ $ make remove
 
 <br/>
 
+### # Details
+
+The Linux kernel contains a Virtual File System layer which is used during system calls acting on files.
+
+The VFS is an indirection layer which handles the file oriented system calls and calls the necessary functions in the physical filesystem code to do the I/O.
+
+When a process issues a file oriented system call, the kernel calls a function contained in the VFS.
+
+This function handles the structure independent manipulations and redirects the call to a function contained in the physical filesystem code, which is responsible for handling the structure dependent operations.
+
+Filesystem code uses the buffer cache functions to request I/O on devices.
+
+**This scheme is illustrated in this figure:**
+
+![image](https://user-images.githubusercontent.com/41619898/91268608-9a776e00-e7b0-11ea-8178-079c05e75d51.png)
+
 <br/>
 
-### Materials for project implementation
+#### **VFS Key Objects**
+
+![image](https://user-images.githubusercontent.com/41619898/91269796-a6642f80-e7b2-11ea-8c6c-6229fea5c990.png)
+
+<br/>
+
+- **inode object**
+
+​	Linux manages all objects in the file system through objects called inodes (index nodes).
+
+​	Inodes refer to symbolic links or directories or files that link to other objects.
+
+- **dentry object**
+
+​	The hierarchical nature of the file system is managed by another object called the dentry object.
+
+​	There is one root dentry referenced in the superblock in the file system, which is the only dentry without a parent layer.
+
+- **file object**
+
+  A file object exists in each open file on a Linux system.
+
+  This object contains information specific to the open instance of that user.
+
+<br/>
+
+#### **VFS Key Objects**
+
+![image](https://user-images.githubusercontent.com/41619898/91270360-79fce300-e7b3-11ea-9e3e-3972b28b2944.png)
+
+Major objects dynamically managed by VFS include **dentry** and **inode** objects.
+
+This object is cached to improve access to the underlying file system.
+
+When the file is opened, the dentry cache is populated with entries that represent the directory level that represents the path.
+
+An inode is also created for the object representing the file.
+
+A dentry cache is created using a hash table and is hashed with the name of the object.
+
+The inode cache is implemented with a hash table and two lists needed to find quickly.
+
+The first list defines which inodes are currently in use, and the second list defines which inodes are not used.
+
+Inodes in use are also stored in hash tables.
+
+<br/>
+
+<br/>
+
+### # Materials for project implementation
 
 - [Message logging with printk](#Message-logging-with-printk)
 - [Watchman](#Watchman)

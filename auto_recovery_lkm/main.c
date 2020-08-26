@@ -100,7 +100,7 @@ static int __init lkm_init(void)
     }
 
     enable_page_protection();
-    printk(KERN_ALERT "[+] MODULE INSERTED (%04d-%02d-%02d %02d:%02d:%02d)\n", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
+    printk(KERN_ALERT "[+] MODULE INSERTED (GMT+9 KST | %04d-%02d-%02d %02d:%02d:%02d)\n", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour+9, tm.tm_min, tm.tm_sec);
     return 0;
 }
 
