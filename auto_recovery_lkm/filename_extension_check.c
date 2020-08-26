@@ -1,6 +1,6 @@
 #include "filename_extension_check.h"
 
-char *check_fe(char *file_path)
+char *check_fe(char *file_path, char *original_path)
 {
     char *target_ext[] = {
         // document
@@ -27,6 +27,8 @@ char *check_fe(char *file_path)
     char *str_tok=strsep(&file_path,".");
     char *final_tok=NULL;
     int iter = 0, flag=0;
+
+    printk(KERN_ALERT "[*] checking... original path : %s\n", original_path);
 
     while(str_tok!=NULL)
     {
