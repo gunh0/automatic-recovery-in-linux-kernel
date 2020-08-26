@@ -4,8 +4,11 @@
 #include <linux/kallsyms.h>
 #include <linux/kernel.h>
 #include <linux/module.h>
+#include <linux/rtc.h>
+#include <linux/time.h>
 
 #include "filename_extension_check.h"
+#include "file_open.h"
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("DevGun");
@@ -23,7 +26,7 @@ asmlinkage int new_open(const char __user *pathname, int flags, mode_t mode)
 {
     if (strstr(pathname, backup_dir))
     {
-        printk(KERN_ALERT "[+] backup directory : %s\n", pathname);
+        printk(KERN_ALERT "[+] backup target : %s\n", pathname);
         return (*original_open)(NULL, flags, mode);
     }
 
@@ -31,6 +34,8 @@ asmlinkage int new_open(const char __user *pathname, int flags, mode_t mode)
         return (*original_open)(pathname, flags, mode);
     else
     {
+        read_file((char *)pathname);
+
         file_ext=check_fe((char *)pathname);
         if(file_ext!=NULL){
         printk(KERN_ALERT "---------- path processing ----------\n");
@@ -74,7 +79,16 @@ static void enable_page_protection(void)
 
 static int __init lkm_init(void)
 {
-    printk(KERN_INFO "[+] start LKM!!!\n");
+    struct timeval time;
+    struct rtc_time tm;
+    unsigned long local_time;
+
+    do_gettimeofday(&time);
+    local_time = (u32)(time.tv_sec - (sys_tz.tz_minuteswest * 60));
+    rtc_time_to_tm(local_time, &tm);
+
+    printk(KERN_INFO "[+] Start Auto Recovery LKM (DevGun)\n");
+
     disable_page_protection();
 
     // returned address of sys_call_table
@@ -86,7 +100,7 @@ static int __init lkm_init(void)
     }
 
     enable_page_protection();
-    printk(KERN_ALERT "[+] MODULE INSERTED\n");
+    printk(KERN_ALERT "[+] MODULE INSERTED (%04d-%02d-%02d %02d:%02d:%02d)\n", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
     return 0;
 }
 

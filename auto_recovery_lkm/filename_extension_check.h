@@ -1,6 +1,3 @@
-#ifndef _SIGNATURE_H_
-#define _SIGNATURE_H_
-
 #include <linux/bug.h>
 #include <linux/string.h>
 #include <linux/kernel.h>
@@ -10,5 +7,3 @@
 #endif
 
 char *check_fe(char *file_path);
-
-#endif
