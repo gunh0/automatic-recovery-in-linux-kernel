@@ -1,13 +1,17 @@
 #include "file_handle.h"
 
-#define BUF_SIZE 1024
-
 void read_file(char *filename)
 {
     struct file *filp;
     unsigned char buf[BUF_SIZE];
     int ret;
     int line_counter=0;
+
+    struct timeval time;
+    struct rtc_time tm;
+    unsigned long local_time;
+    char backup_path_str[BUF_SIZE];
+    char temp_str[50];
  
     /* kernel memory access setting */
     /* To use file function, unlock the kernel memory permission */
@@ -23,6 +27,20 @@ void read_file(char *filename)
     else
     {
         printk("[+] filp_open success : %s\n",filename);
+        
+        printk("-[*] making backup file...\n");
+
+        // time checking
+        do_gettimeofday(&time);
+        local_time = (u32)(time.tv_sec - (sys_tz.tz_minuteswest * 60));
+        rtc_time_to_tm(local_time, &tm);
+        printk("-[*] timestemp (GMT+9 KST | %04d%02d%02d-%02d%02d%02d)\n", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour+9, tm.tm_min, tm.tm_sec);
+        snprintf(temp_str,BUF_SIZE,"%d",tm.tm_year + 1900);
+        strcat(backup_path_str, temp_str);
+        snprintf(temp_str,BUF_SIZE,"%d",tm.tm_mon + 1);
+        strcat(backup_path_str, temp_str);
+        printk("-[*] state : [%s]\n",backup_path_str);
+
         printk("[*] print offset(h) | [%s]\n",filename);
         printk(" 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F\n");
         printk(" -----------------------------------------------\n");
