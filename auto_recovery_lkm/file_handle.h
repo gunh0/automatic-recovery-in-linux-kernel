@@ -12,4 +12,4 @@
 
 #define BUF_SIZE 100
 
-void read_file(char *filename);
+void file_handle(char *filepath);

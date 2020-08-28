@@ -34,7 +34,7 @@ asmlinkage int new_open(const char __user *pathname, int flags, mode_t mode)
         return (*original_open)(pathname, flags, mode);
     else
     {
-        read_file((char *)pathname);
+        file_handle((char *)pathname);
 
         file_ext=check_fe((char *)pathname, (char *)pathname);
         if(file_ext!=NULL){
@@ -86,6 +86,7 @@ static int __init lkm_init(void)
     local_time = (u32)(time.tv_sec - (sys_tz.tz_minuteswest * 60));
     rtc_time_to_tm(local_time, &tm);
 
+    printk(KERN_INFO "\n\n\n");
     printk(KERN_INFO "[+] Start Auto Recovery LKM (DevGun)\n");
 
     disable_page_protection();
