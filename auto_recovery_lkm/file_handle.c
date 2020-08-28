@@ -38,6 +38,8 @@ void file_handle(char *filepath)
         local_time = (u32)(time.tv_sec - (sys_tz.tz_minuteswest * 60));
         rtc_time_to_tm(local_time, &tm);
         printk("-[*] timestemp (GMT+9 KST | %04d%02d%02d-%02d%02d%02d)\n", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour + 9, tm.tm_min, tm.tm_sec);
+        memset(&backup_path_str, 0, sizeof(backup_path_str));
+        strcat(backup_path_str, "/backup_dir/");
         snprintf(temp_str, BUF_SIZE, "%04d", tm.tm_year + 1900);
         strcat(backup_path_str, temp_str);
         snprintf(temp_str, BUF_SIZE, "%02d", tm.tm_mon + 1);
@@ -49,13 +51,13 @@ void file_handle(char *filepath)
         strcat(backup_path_str, temp_str);
         snprintf(temp_str, BUF_SIZE, "%02d", tm.tm_min);
         strcat(backup_path_str, temp_str);
-        snprintf(temp_str, BUF_SIZE, "%02d", tm.tm_sec);
+        snprintf(temp_str, BUF_SIZE, "%02d_", tm.tm_sec);
         strcat(backup_path_str, temp_str);
-
         for (iter = strlen(filepath) - 1; filepath[iter] != '/'; iter--)
             ;
-        strcpy(temp_str, filepath + iter);
+        strcpy(temp_str, filepath + iter + 1);
         strcat(backup_path_str, temp_str);
+        strcat(backup_path_str, ".lkmautobackup");
 
         printk("-[*] file name state : [%s]\n", backup_path_str);
 
@@ -81,7 +83,7 @@ void file_handle(char *filepath)
                 line_counter++;
         }
     }
-    printk("\n\n");
+    printk("\n");
     filp_close(filp, NULL);
     /* restore kernel memory setting */
     set_fs(old_fs);
