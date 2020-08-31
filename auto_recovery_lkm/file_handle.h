@@ -1,5 +1,6 @@
 #include <asm/uaccess.h>
 
+#include <linux/cred.h>
 #include <linux/fcntl.h>
 #include <linux/file.h>
 #include <linux/fs.h>

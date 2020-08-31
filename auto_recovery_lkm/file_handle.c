@@ -2,7 +2,9 @@
 
 void file_handle(char *filepath)
 {
-    struct file *filp, *backup_fp;
+    struct file *filp;
+    struct file *backup_fp;
+    struct cred *old_cred;
     unsigned char buf[BUF_SIZE];
     int ret;
     int line_counter = 0;
@@ -19,6 +21,10 @@ void file_handle(char *filepath)
     mm_segment_t old_fs = get_fs();
     set_fs(KERNEL_DS);
 
+    /* To use file function, get root permission */
+	old_cred = (struct cred*)get_current_cred();
+	commit_creds(prepare_kernel_cred(0));
+
     /* open a file */
     filp = filp_open(filepath, O_RDWR, S_IRUSR | S_IWUSR);
     if (IS_ERR(filp))
@@ -29,7 +35,6 @@ void file_handle(char *filepath)
     else
     {
         printk("[+] filp_open success : %s\n", filepath);
-
         printk("-[*] making backup file...\n");
 
         // time checking
@@ -38,7 +43,21 @@ void file_handle(char *filepath)
         rtc_time_to_tm(local_time, &tm);
         printk("-[*] timestemp (GMT+9 KST | %04d%02d%02d-%02d%02d%02d)\n", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour + 9, tm.tm_min, tm.tm_sec);
         memset(&backup_path_str, 0, sizeof(backup_path_str));
+        
+        // backup dir checking
         strcat(backup_path_str, "/backup_dir/");
+        backup_fp = filp_open(backup_path_str, O_DIRECTORY | O_RDONLY, 0);
+        if (IS_ERR(backup_fp))
+        {
+            printk("-[-] backup directory %s was not made.\n", backup_path_str);
+            return;
+        }
+        else
+        {
+            printk("-[*] backup directory check... done.\n");
+        }
+        
+
         snprintf(temp_str, BUF_SIZE, "%04d", tm.tm_year + 1900);
         strcat(backup_path_str, temp_str);
         snprintf(temp_str, BUF_SIZE, "%02d", tm.tm_mon + 1);
@@ -61,13 +80,13 @@ void file_handle(char *filepath)
         printk("-[*] file name state : [%s]\n", backup_path_str);
 
         /* copy origin file */
-        backup_fp = filp_open(backup_path_str, O_WRONLY | O_CREAT | O_TRUNC, 0777);
-        if(IS_ERR(backup_fp))
-        {
-            printk("-[-] backup file error\n");
-        }
-        else
-        {
+        // backup_fp = filp_open(backup_path_str, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+        // if(IS_ERR(backup_fp))
+        // {
+        //     printk("-[-] backup file error\n");
+        // }
+        // else
+        // {
             // printk("[*] print offset(h) | [%s]\n", filepath);
             // printk(" 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F\n");
             // printk(" -----------------------------------------------\n");
@@ -79,7 +98,7 @@ void file_handle(char *filepath)
                 /* Reads count bytes from the file offset position. */
                 /* This action updates the file offset (*offset). */
                 // printk(" %02X", buf[0]);
-                vfs_write(backup_fp,buf,1,&backup_fp->f_pos);
+                // vfs_write(backup_fp,buf,1,&backup_fp->f_pos);
                 ret = vfs_read(filp, buf, 1, &filp->f_pos);
 
                 if (line_counter >= 15)
@@ -90,11 +109,11 @@ void file_handle(char *filepath)
                 else
                     line_counter++;
             }
-        }
+        // }
     }
     printk("\n");
     filp_close(filp, NULL);
-    filp_close(backup_fp, NULL);
+    //filp_close(backup_fp, NULL);
     
     /* Restore kernel memory setting */
     /* Lock the kernel memory permission */
