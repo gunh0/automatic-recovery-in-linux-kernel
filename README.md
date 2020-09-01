@@ -20,6 +20,7 @@ Ransomware Response Automatic Recovery Kernel Module
 ```bash
 # Start Module
 $ git clone https://github.com/devgunho/Automatic_Recovery_In_Linux.git
+$ sudo su
 $ cd Automatic_Recovery_In_Linux
 $ cd auto_recovery_lkm
 $ make

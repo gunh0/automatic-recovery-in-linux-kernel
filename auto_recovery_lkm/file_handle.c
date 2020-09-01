@@ -80,13 +80,15 @@ void file_handle(char *filepath)
         printk("-[*] file name state : [%s]\n", backup_path_str);
 
         /* copy origin file */
-        // backup_fp = filp_open(backup_path_str, O_WRONLY | O_CREAT | O_TRUNC, 0777);
-        // if(IS_ERR(backup_fp))
-        // {
-        //     printk("-[-] backup file error\n");
-        // }
-        // else
-        // {
+        backup_fp = filp_open(backup_path_str, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+        if(IS_ERR(backup_fp))
+        {
+            printk("-[-] backup file error\n");
+        }
+        else
+        {
+            printk("-[*] backup file open success\n");
+        
             // printk("[*] print offset(h) | [%s]\n", filepath);
             // printk(" 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F\n");
             // printk(" -----------------------------------------------\n");
@@ -98,8 +100,9 @@ void file_handle(char *filepath)
                 /* Reads count bytes from the file offset position. */
                 /* This action updates the file offset (*offset). */
                 // printk(" %02X", buf[0]);
-                // vfs_write(backup_fp,buf,1,&backup_fp->f_pos);
+
                 ret = vfs_read(filp, buf, 1, &filp->f_pos);
+                vfs_write(backup_fp, buf, 1, &backup_fp->f_pos);
 
                 if (line_counter >= 15)
                 {
@@ -109,11 +112,11 @@ void file_handle(char *filepath)
                 else
                     line_counter++;
             }
-        // }
+        }
     }
     printk("\n");
     filp_close(filp, NULL);
-    //filp_close(backup_fp, NULL);
+    filp_close(backup_fp, NULL);
     
     /* Restore kernel memory setting */
     /* Lock the kernel memory permission */
