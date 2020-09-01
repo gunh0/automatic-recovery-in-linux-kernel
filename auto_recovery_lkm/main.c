@@ -17,7 +17,7 @@ MODULE_VERSION("-");
 
 char *target_dir = "/target_dir";
 char *backup_dir = "/backup_dir";
-char *file_ext=NULL;
+char *file_ext = NULL;
 
 void **sys_call_table;
 
@@ -36,11 +36,12 @@ asmlinkage int new_open(const char __user *pathname, int flags, mode_t mode)
     {
         file_handle((char *)pathname);
 
-        file_ext=check_fe((char *)pathname, (char *)pathname);
-        if(file_ext!=NULL){
-        printk(KERN_ALERT "---------- path processing ----------\n");
-        printk(KERN_ALERT "[+] current target : %s\n", pathname);
-        printk(KERN_ALERT "-[+] file ext : %s\n", file_ext);
+        file_ext = check_fe((char *)pathname, (char *)pathname);
+        if (file_ext != NULL)
+        {
+            printk(KERN_ALERT "---------- path processing ----------\n");
+            printk(KERN_ALERT "[+] current target : %s\n", pathname);
+            printk(KERN_ALERT "-[+] file ext : %s\n", file_ext);
         }
     }
     return (*original_open)(pathname, flags, mode);
@@ -100,7 +101,7 @@ static int __init lkm_init(void)
     }
 
     enable_page_protection();
-    printk(KERN_ALERT "[+] MODULE INSERTED (GMT+9 KST | %04d-%02d-%02d %02d:%02d:%02d)\n", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour+9, tm.tm_min, tm.tm_sec);
+    printk(KERN_ALERT "[+] MODULE INSERTED (GMT+9 KST | %04d-%02d-%02d %02d:%02d:%02d)\n", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour + 9, tm.tm_min, tm.tm_sec);
     return 0;
 }
 

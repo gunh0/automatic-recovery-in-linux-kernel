@@ -76,8 +76,11 @@ void file_handle(char *filepath)
         strcpy(temp_str, filepath + iter + 1);
         strcat(backup_path_str, temp_str);
         strcat(backup_path_str, ".lkmautobackup");
-
         printk("-[*] file name state : [%s]\n", backup_path_str);
+
+        printk("-[*] make backup file fingerprint\n");
+        printk("-[*] 1st. file name : %s\n", filepath + iter + 1);
+        printk("-[*] 2nd. file name string size : %lu\n", strlen(filepath + iter + 1));
 
         /* copy origin file */
         backup_fp = filp_open(backup_path_str, O_WRONLY | O_CREAT | O_TRUNC, 0777);
