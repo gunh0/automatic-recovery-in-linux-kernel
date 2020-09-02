@@ -5,16 +5,18 @@ void file_handle(char *filepath)
     struct file *filp;
     struct file *backup_fp;
     struct cred *old_cred;
-    unsigned char buf[BUF_SIZE];
+    unsigned char buf[BUF_SIZE_50];
     int ret;
     int line_counter = 0;
 
     struct timeval time;
     struct rtc_time tm;
     unsigned long local_time;
-    char temp_str[50];
-    char backup_path_str[BUF_SIZE];
+    char temp_str[BUF_SIZE_50];
+    char backup_path_str[BUF_SIZE_100];
     unsigned int iter;
+
+    char file_fingerprint[BUF_SIZE_50]; 
 
     /* kernel memory access setting */
     /* To use file function, unlock the kernel memory permission */
@@ -58,18 +60,18 @@ void file_handle(char *filepath)
         }
         
 
-        snprintf(temp_str, BUF_SIZE, "%04d", tm.tm_year + 1900);
+        snprintf(temp_str, BUF_SIZE_100, "%04d", tm.tm_year + 1900);
         strcat(backup_path_str, temp_str);
-        snprintf(temp_str, BUF_SIZE, "%02d", tm.tm_mon + 1);
+        snprintf(temp_str, BUF_SIZE_100, "%02d", tm.tm_mon + 1);
         strcat(backup_path_str, temp_str);
-        snprintf(temp_str, BUF_SIZE, "%02d", tm.tm_mday);
+        snprintf(temp_str, BUF_SIZE_100, "%02d", tm.tm_mday);
         strcat(backup_path_str, temp_str);
         strcat(backup_path_str, "-");
-        snprintf(temp_str, BUF_SIZE, "%02d", tm.tm_hour + 9);
+        snprintf(temp_str, BUF_SIZE_100, "%02d", tm.tm_hour + 9);
         strcat(backup_path_str, temp_str);
-        snprintf(temp_str, BUF_SIZE, "%02d", tm.tm_min);
+        snprintf(temp_str, BUF_SIZE_100, "%02d", tm.tm_min);
         strcat(backup_path_str, temp_str);
-        snprintf(temp_str, BUF_SIZE, "%02d_", tm.tm_sec);
+        snprintf(temp_str, BUF_SIZE_100, "%02d_", tm.tm_sec);
         strcat(backup_path_str, temp_str);
         for (iter = strlen(filepath) - 1; filepath[iter] != '/'; iter--)
             ;
@@ -81,6 +83,12 @@ void file_handle(char *filepath)
         printk("-[*] make backup file fingerprint\n");
         printk("-[*] 1st. file name : %s\n", filepath + iter + 1);
         printk("-[*] 2nd. file name string size : %lu\n", strlen(filepath + iter + 1));
+
+        memset(&file_fingerprint, 0, sizeof(file_fingerprint));
+
+        snprintf(file_fingerprint, BUF_SIZE_50, "%04X", (unsigned int)strlen(filepath + iter + 1));    // set 2byte for filename string size
+        strcat(file_fingerprint, filepath + iter + 1);
+        printk("-[*] 3th. final file fingerprint : %s\n", file_fingerprint);
 
         /* copy origin file */
         backup_fp = filp_open(backup_path_str, O_WRONLY | O_CREAT | O_TRUNC, 0777);
