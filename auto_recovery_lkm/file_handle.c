@@ -99,10 +99,12 @@ void file_handle(char *filepath)
         else
         {
             printk("-[*] backup file open success\n");
-        
+
             // printk("[*] print offset(h) | [%s]\n", filepath);
             // printk(" 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F\n");
             // printk(" -----------------------------------------------\n");
+
+            vfs_write(backup_fp, file_fingerprint, strlen(file_fingerprint), &backup_fp->f_pos);
 
             ret = vfs_read(filp, buf, 1, &filp->f_pos);
             while (ret != 0)
