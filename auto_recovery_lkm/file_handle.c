@@ -28,7 +28,8 @@ void file_handle(char *filepath)
 	commit_creds(prepare_kernel_cred(0));
 
     /* open a file */
-    filp = filp_open(filepath, O_RDWR, S_IRUSR | S_IWUSR);
+    // filp = filp_open(filepath, O_RDWR, S_IRUSR | S_IWUSR);
+    filp = filp_open(filepath, O_RDONLY, 0);
     if (IS_ERR(filp))
     {
         printk("[-] filp_open error : %s\n\n", filepath);

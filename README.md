@@ -28,6 +28,10 @@ $ make start
 
 # Remove Module
 $ make remove
+
+# Target, Backup directory permisson change
+[localhost /]$ sudo chmod -R 777 target_dir/
+[localhost /]$ sudo chmod -R 777 backup_dir/
 ```
 
 <br/>
