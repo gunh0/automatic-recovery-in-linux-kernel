@@ -48,7 +48,7 @@ asmlinkage int new_open(const char __user *pathname, int flags, mode_t mode)
             printk(KERN_ALERT "---------- path processing ----------\n");
             printk(KERN_ALERT "[+] current target : %s\n", pathname);
             printk(KERN_ALERT "-[+] file ext : %s\n", file_ext);
-        //     // file_handle((char *)pathname);
+            file_handle((char *)pathname);
         }
     }
     return (*original_open)(pathname, flags, mode);
