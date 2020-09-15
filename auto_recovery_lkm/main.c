@@ -7,6 +7,8 @@
 #include <linux/rtc.h>
 #include <linux/time.h>
 
+#include "flag_handle.h"
+#include "file_open.h"
 #include "filename_extension_check.h"
 #include "file_handle.h"
 
@@ -29,20 +31,19 @@ asmlinkage int new_open(const char __user *pathname, int flags, mode_t mode)
         printk(KERN_ALERT "[+] backup target : %s\n", pathname);
         return (*original_open)(NULL, flags, mode);
     }
-
     if (!strstr(pathname, target_dir))
         return (*original_open)(pathname, flags, mode);
     else
     {
-        file_handle((char *)pathname);
-
-        file_ext = check_fe((char *)pathname, (char *)pathname);
-        if (file_ext != NULL)
-        {
-            printk(KERN_ALERT "---------- path processing ----------\n");
-            printk(KERN_ALERT "[+] current target : %s\n", pathname);
-            printk(KERN_ALERT "-[+] file ext : %s\n", file_ext);
-        }
+        print_open_status((char *)pathname, flags);
+        //file_ext = check_fe((char *)pathname, (char *)pathname);
+        // if (file_ext != NULL)
+        // {
+        //     printk(KERN_ALERT "---------- path processing ----------\n");
+        //     printk(KERN_ALERT "[+] current target : %s\n", pathname);
+        //     printk(KERN_ALERT "-[+] file ext : %s\n", file_ext);
+        //     // file_handle((char *)pathname);
+        // }
     }
     return (*original_open)(pathname, flags, mode);
 }

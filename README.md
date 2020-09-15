@@ -104,6 +104,31 @@ Inodes in use are also stored in hash tables.
 
 <br/>
 
+### Erebus Ransomware Affected File Types
+
+```
+.1cd, .3dm, .3ds, .3fr, .3g2, .3gp, .3pr, .7z, .7zip, .aac, .ab4, .abd, .accdb, .accde, .accdr, .accdt, .ach, .acr, .act, .adb, .adp, .ads, .agdl, .ai,
+.aiff, .ait, .al, .aoi, .apj, .arw, .ascx, .asf, .asm, .asp, .aspx, .asx, .atb, .avi, .awg, .back, .backup, .backupdb, .bak, .bank, .bay, .bdb, .bgt, .bik,
+.bin, .bkp, .blend, .bmp, .bpw, .c, .cdb, .cdf, .cdr, .cdr3, .cdr4, .cdr5, .cdr6, .cdrw, .cdx, .ce1, .ce2, .cer, .cfg, .cfn, .cgm, .cib, .class, .cls, .cmt,
+.config, .contact, .cpi, .cpp, .cr2, .craw, .crt, .crw, .cs, .csh, .csl, .css, .csv, .dac, .dat, .db, .db_journal, .db3, .dbf, .dbx, .dc2, .dcr, .dcs, .ddd,
+.ddoc, .ddrw, .dds, .def, .der, .des, .design, .dgc, .dit, .djvu, .dng, .doc, .docm, .docx, .dot, .dotm, .dotx, .drf, .drw, .dtd, .dwg, .dxb, .dxf, .dxg,
+.edb, .eml, .eps, .erbsql, .erf, .exf, .fdb, .ffd, .fff, .fh, .fhd, .fla, .flac, .flb, .flf, .flv, .flvv, .fpx, .fxg, .gif, .gray, .grey, .groups, .gry,
+.h, .hbk, .hdd, .hpp, .html, .ibank, .ibd, .ibz, .idx, .iif, .iiq, .incpas, .indd, .info, .info_, .ini, .jar, .java, .jnt, .jpe, .jpeg, .jpg, .js, .json,
+.kc2, .kdbx, .kdc, .key, .kpdx, .kwm, .laccdb, .lck, .ldf, .lit, .lock, .log, .lua, .m, .m2ts, .m3u, .m4p, .m4v, .mab, .mapimail, .max, .mbx, .md, .mdb,
+.mdc, .mdf, .mef, .mfw, .mid, .mkv, .mlb, .mmw, .mny, .moneywell, .mos, .mov, .mp3, .mp4, .mpeg, .mpg, .mrw, .msf, .msg, .myd, .nd, .ndd, .ndf, .nef,
+.nk2, .nop, .nrw, .ns2, .ns3, .ns4, .nsd, .nsf, .nsg, .nsh, .nvram, .nwb, .nx2, .nxl, .nyf, .oab, .obj, .odb, .odc, .odf, .odg, .odm, .odp, .ods, .odt,
+.ogg, .oil, .omg, .orf, .ost, .otg, .oth, .otp, .ots, .ott, .p12, .p7b, .p7c, .pab, .pages, .pas, .pat, .pbf, .pcd, .pct, .pdb, .pdd, .pdf, .pef, .pem,
+.pfx, .php, .pif, .pl, .plc, .plus_muhd, .pm, .pm!, .pmi, .pmj, .pml, .pmm, .pmo, .pmr, .pnc, .pnd, .png, .pnx, .pot, .potm, .potx, .ppam, .pps, .ppsm,
+.ppsm, .ppsx, .ppt, .pptm, .pptm, .pptx, .prf, .ps, .psafe3, .psd, .pspimage, .pst, .ptx, .pwm, .py, .qba, .qbb, .qbm, .qbr, .qbw, .qbx, .qby, .qcow,
+.qcow2, .qed, .qtb, .r3d, .raf, .rar, .rat, .raw, .rdb, .rm, .rtf, .rvt, .rw2, .rwl, .rwz, .s3db, .safe, .sas7bdat, .sav, .save, .say, .sd0, .sda, .sdb,
+.sdf, .sh, .sldm, .sldx, .sql, .sqlite, .sqlite3, .sqlitedb, .sqlite-shm, .sqlite-wal, .sr2, .srb, .srf, .srs, .srt, .srw, .st4, .st5, .st6, .st7, .st8,
+.stc, .std, .sti, .stm, .stw, .stx, .svg, .swf, .sxc, .sxd, .sxg, .sxi, .sxm, .sxw, .tbb, .tbn, .tex, .tga, .thm, .tif, .tlg, .tlx, .txt, .usr, .vbox, .vdi,
+.vhd, .vhdx, .vmdk, .vmsd, .vmx, .vmxf, .vob, .wab, .wad, .wallet, .war, .wav, .wb2, .wma, .wmf, .wmv, .wpd, .wps, .x11, .x3f, .xis, .xla, .xlam, .xlk, .xlm,
+.xlr, .xls, .xlsb, .xlsm, .xlsx, .xlt, .xltm, .xltx, .xlw, .xml, .ycbcra, .yuv, .zip
+```
+
+<br/>
+
 <br/>
 
 ### # Materials for project implementation

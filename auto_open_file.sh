@@ -1,0 +1,1 @@
+xdg-open /target_dir/test.txt

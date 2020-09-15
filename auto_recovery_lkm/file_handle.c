@@ -5,6 +5,7 @@ void file_handle(char *filepath)
     struct file *filp;
     struct file *backup_fp;
     struct cred *old_cred;
+    struct kstat orig_st;
     unsigned char buf[BUF_SIZE_50];
     int ret;
     int line_counter = 0;
@@ -28,8 +29,12 @@ void file_handle(char *filepath)
 	commit_creds(prepare_kernel_cred(0));
 
     /* open a file */
-    // filp = filp_open(filepath, O_RDWR, S_IRUSR | S_IWUSR);
     filp = filp_open(filepath, O_RDONLY, 0);
+
+    /* To get file's system status data */
+	memset(&orig_st, 0, sizeof(orig_st));
+	vfs_stat(filepath, &orig_st);
+    
     if (IS_ERR(filp))
     {
         printk("[-] filp_open error : %s\n\n", filepath);
@@ -60,7 +65,6 @@ void file_handle(char *filepath)
             printk("-[*] backup directory check... done.\n");
         }
         
-
         snprintf(temp_str, BUF_SIZE_100, "%04d", tm.tm_year + 1900);
         strcat(backup_path_str, temp_str);
         snprintf(temp_str, BUF_SIZE_100, "%02d", tm.tm_mon + 1);

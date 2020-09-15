@@ -1,3 +1,5 @@
+/* This code is used for debugging. */
+
 #include "file_open.h"
 
 #define BUF_SIZE 1024
@@ -23,7 +25,6 @@ void read_file(char *filename)
     else {
         printk("open success : %s\n",filename);
     
-
         printk("Offset(h) [%s]\n",filename);
         printk(" 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F\n");
         printk(" -----------------------------------------------\n");
