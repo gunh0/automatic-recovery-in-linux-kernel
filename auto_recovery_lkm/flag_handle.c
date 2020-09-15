@@ -67,10 +67,10 @@ void print_open_status(char *file_path, int flags)
     print_flags(flags);
 
     set_fs(get_ds());
-    
-    old_cred = (struct cred*)get_current_cred();
+
+    old_cred = (struct cred *)get_current_cred();
     commit_creds(prepare_kernel_cred(0));
-    
+
     if (!IS_ERR(fp))
     {
         printk("backup : %-9s\n", "Possible");

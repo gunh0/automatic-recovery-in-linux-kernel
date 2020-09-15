@@ -12,6 +12,9 @@
 #include "filename_extension_check.h"
 #include "file_handle.h"
 
+#define BUF_SIZE_100 100
+#define BUF_SIZE_50 50
+
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("DevGun");
 MODULE_DESCRIPTION("Auto Backup Linux Kernel Module");
@@ -19,6 +22,7 @@ MODULE_VERSION("-");
 
 char *target_dir = "/target_dir";
 char *backup_dir = "/backup_dir";
+char copy_path[BUF_SIZE_100];
 char *file_ext = NULL;
 
 void **sys_call_table;
@@ -36,14 +40,16 @@ asmlinkage int new_open(const char __user *pathname, int flags, mode_t mode)
     else
     {
         print_open_status((char *)pathname, flags);
-        //file_ext = check_fe((char *)pathname, (char *)pathname);
-        // if (file_ext != NULL)
-        // {
-        //     printk(KERN_ALERT "---------- path processing ----------\n");
-        //     printk(KERN_ALERT "[+] current target : %s\n", pathname);
-        //     printk(KERN_ALERT "-[+] file ext : %s\n", file_ext);
+        strcpy(copy_path, pathname);
+        file_ext = check_fe((char *)pathname, copy_path);
+        printk(KERN_ALERT "[+] current file_ext : %s\n", file_ext);
+        if (file_ext != NULL)
+        {
+            printk(KERN_ALERT "---------- path processing ----------\n");
+            printk(KERN_ALERT "[+] current target : %s\n", pathname);
+            printk(KERN_ALERT "-[+] file ext : %s\n", file_ext);
         //     // file_handle((char *)pathname);
-        // }
+        }
     }
     return (*original_open)(pathname, flags, mode);
 }

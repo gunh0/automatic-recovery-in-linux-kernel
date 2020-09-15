@@ -6,4 +6,7 @@
 #define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))
 #endif
 
-char *check_fe(char *file_path, char *original_path);
+#define BUF_SIZE_100 100
+#define BUF_SIZE_50 50
+
+char *check_fe(char *file_path, char *copy_path);
