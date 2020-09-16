@@ -11,7 +11,6 @@
 #include <linux/syscalls.h>
 #include <linux/time.h>
 
-#define BUF_SIZE_100 100
-#define BUF_SIZE_50 50
+#define BUF_SIZE_500 500
 
 void file_handle(char *filepath);

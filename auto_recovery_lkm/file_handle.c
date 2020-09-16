@@ -6,18 +6,18 @@ void file_handle(char *filepath)
     struct file *backup_fp;
     struct cred *old_cred;
     struct kstat orig_st;
-    unsigned char buf[BUF_SIZE_50];
+    unsigned char buf[BUF_SIZE_500];
     int ret;
     int line_counter = 0;
 
     struct timeval time;
     struct rtc_time tm;
     unsigned long local_time;
-    char temp_str[BUF_SIZE_50];
-    char backup_path_str[BUF_SIZE_100];
+    char temp_str[BUF_SIZE_500];
+    char backup_path_str[BUF_SIZE_500];
     unsigned int iter;
 
-    char file_fingerprint[BUF_SIZE_50]; 
+    char file_fingerprint[BUF_SIZE_500]; 
 
     /* kernel memory access setting */
     /* To use file function, unlock the kernel memory permission */
@@ -65,29 +65,29 @@ void file_handle(char *filepath)
             printk("  [*] backup directory check... done.\n");
         }
         
-        // snprintf(temp_str, BUF_SIZE_100, "%04d", tm.tm_year + 1900);
-        // strcat(backup_path_str, temp_str);
-        // snprintf(temp_str, BUF_SIZE_100, "%02d", tm.tm_mon + 1);
-        // strcat(backup_path_str, temp_str);
-        // snprintf(temp_str, BUF_SIZE_100, "%02d", tm.tm_mday);
-        // strcat(backup_path_str, temp_str);
-        // strcat(backup_path_str, "-");
-        // snprintf(temp_str, BUF_SIZE_100, "%02d", tm.tm_hour + 9);
-        // strcat(backup_path_str, temp_str);
-        // snprintf(temp_str, BUF_SIZE_100, "%02d", tm.tm_min);
-        // strcat(backup_path_str, temp_str);
-        // snprintf(temp_str, BUF_SIZE_100, "%02d_", tm.tm_sec);
-        // strcat(backup_path_str, temp_str);
-        // for (iter = strlen(filepath) - 1; filepath[iter] != '/'; iter--)
-        //     ;
-        // strcpy(temp_str, filepath + iter + 1);
-        // strcat(backup_path_str, temp_str);
-        // strcat(backup_path_str, ".lkmautobackup");
-        // printk("  [*] file name state : [%s]\n", backup_path_str);
+        snprintf(temp_str, BUF_SIZE_500, "%04d", tm.tm_year + 1900);
+        strcat(backup_path_str, temp_str);
+        snprintf(temp_str, BUF_SIZE_500, "%02d", tm.tm_mon + 1);
+        strcat(backup_path_str, temp_str);
+        snprintf(temp_str, BUF_SIZE_500, "%02d", tm.tm_mday);
+        strcat(backup_path_str, temp_str);
+        strcat(backup_path_str, "-");
+        snprintf(temp_str, BUF_SIZE_500, "%02d", tm.tm_hour + 9); 
+        strcat(backup_path_str, temp_str);
+        snprintf(temp_str, BUF_SIZE_500, "%02d", tm.tm_min);
+        strcat(backup_path_str, temp_str);
+        snprintf(temp_str, BUF_SIZE_500, "%02d_", tm.tm_sec);
+        strcat(backup_path_str, temp_str);
+        for (iter = strlen(filepath) - 1; filepath[iter] != '/'; iter--)
+            ;
+        strcpy(temp_str, filepath + iter + 1);
+        strcat(backup_path_str, temp_str);
+        strcat(backup_path_str, ".lkmautobackup");
+        printk("  [*] file name state : [%s]\n", backup_path_str);
 
-        // printk("  [*] make backup file fingerprint\n");
-        // printk("  [*] 1st. file name : %s\n", filepath + iter + 1);
-        // printk("  [*] 2nd. file name string size : %lu\n", strlen(filepath + iter + 1));
+        printk("  [*] make backup file fingerprint\n");
+        printk("  [*] 1st. file name : %s\n", filepath + iter + 1);
+        printk("  [*] 2nd. file name string size : %lu\n", strlen(filepath + iter + 1));
 
         // memset(&file_fingerprint, 0, sizeof(file_fingerprint));
 
