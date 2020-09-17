@@ -1,0 +1,1 @@
+gio open /target_dir/test.txt

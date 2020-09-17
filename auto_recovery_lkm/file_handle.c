@@ -89,48 +89,49 @@ void file_handle(char *filepath)
         printk("  [*] 1st. file name : %s\n", filepath + iter + 1);
         printk("  [*] 2nd. file name string size : %lu\n", strlen(filepath + iter + 1));
 
-        // memset(&file_fingerprint, 0, sizeof(file_fingerprint));
+        memset(&file_fingerprint, 0, sizeof(file_fingerprint));
 
-        // snprintf(file_fingerprint, BUF_SIZE_50, "%04X", (unsigned int)strlen(filepath + iter + 1));    // set 2byte for filename string size
-        // strcat(file_fingerprint, filepath + iter + 1);
-        // printk("  [*] 3th. final file fingerprint : %s\n", file_fingerprint);
+        snprintf(file_fingerprint, BUF_SIZE_500, "%04X", (unsigned int)strlen(filepath + iter + 1));    // set 2byte for filename string size
+        strcat(file_fingerprint, filepath + iter + 1);
+        printk("  [*] 3th. final file fingerprint : %s\n", file_fingerprint);
 
         /* copy origin file */
-        // backup_fp = filp_open(backup_path_str, O_WRONLY | O_CREAT | O_TRUNC, 0777);
-        // if(IS_ERR(backup_fp))
-        // {
-        //     printk("[-] backup file error\n");
-        // }
-        // else
-        // {
-        //     printk("  [*] backup file open success\n");
+        backup_fp = filp_open(backup_path_str, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+        if(IS_ERR(backup_fp))
+        {
+            printk("[-] backup file error\n");
+        }
+        else
+        {
+            printk("  [*] backup file open success\n");
 
-        //     // printk("  [*] print offset(h) | [%s]\n", filepath);
-        //     // printk(" 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F\n");
-        //     // printk(" -----------------------------------------------\n");
+            // printk("  [*] print offset(h) | [%s]\n", filepath);
+            // printk(" 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F\n");
+            // printk(" -----------------------------------------------\n");
 
-        //     vfs_write(backup_fp, file_fingerprint, strlen(file_fingerprint), &backup_fp->f_pos);
+            vfs_write(backup_fp, file_fingerprint, strlen(file_fingerprint), &backup_fp->f_pos);
 
-        //     ret = vfs_read(filp, buf, 1, &filp->f_pos);
-        //     while (ret != 0)
-        //     {
-        //         /* (struct file *file, char __user *buf, size_t count, loff_t *offset) */
-        //         /* Reads count bytes from the file offset position. */
-        //         /* This action updates the file offset (*offset). */
-        //         // printk(" %02X", buf[0]);
+            ret = vfs_read(filp, buf, 1, &filp->f_pos);
+            while (ret != 0)
+            {
+                /* (struct file *file, char __user *buf, size_t count, loff_t *offset) */
+                /* Reads count bytes from the file offset position. */
+                /* This action updates the file offset (*offset). */
+                // printk(" %02X", buf[0]);
 
-        //         ret = vfs_read(filp, buf, 1, &filp->f_pos);
-        //         vfs_write(backup_fp, buf, 1, &backup_fp->f_pos);
+                vfs_write(backup_fp, buf, 1, &backup_fp->f_pos);
+                ret = vfs_read(filp, buf, 1, &filp->f_pos);
 
-        //         if (line_counter >= 15)
-        //         {
-        //             line_counter = 0;
-        //             // printk("\n");
-        //         }
-        //         else
-        //             line_counter++;
-        //     }
-        // }
+                // if (line_counter >= 15)
+                // {
+                //     line_counter = 0;
+                //     printk("\n");
+                // }
+                // else
+                //     line_counter++;
+            }
+            vfs_write(backup_fp, buf, 1, &backup_fp->f_pos);
+        }
     }
     printk("\n");
     filp_close(filp, NULL);
