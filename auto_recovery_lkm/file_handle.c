@@ -8,7 +8,7 @@ void file_handle(char *filepath)
     struct kstat orig_st;
     unsigned char buf[BUF_SIZE_500];
     int ret;
-    int line_counter = 0;
+    // int line_counter = 0;
 
     struct timeval time;
     struct rtc_time tm;
