@@ -25,16 +25,17 @@ int isDirectory(const char *path)
 int main()
 {
     char *dirname = "/backup";
+    char recovery_path[256];
     char *filename = NULL;
     char fullpath[256];
     DIR *dp;
     struct dirent *dir;
     int file_cnt = 1;
 
-    FILE *fp;
+    FILE *fp, *recovery_fp;
 
     if (isDirectory(dirname) != 1)
-        printf("[-] Directory does not exist.\n");
+        printf("[-] Backup Directory does not exist.\n");
 
     else
     {
@@ -61,13 +62,26 @@ int main()
                     };
                     fp = fopen(fullpath, "r");
                     fread(buf, 4, 1, fp);
-                    int filename_size = (int)strtol(buf, NULL, 16);
-                    printf("  [*] filename info. / length: %d\n", filename_size);
+
+                    int origin_filename_size = (int)strtol(buf, NULL, 16);
+                    printf("  [*] filename info. / length: %d\n", origin_filename_size);
+                    memset(buf, 0, sizeof(char) * 256);
+                    fread(buf, origin_filename_size, 1, fp);
+                    printf("  [*] filename info. / string: %s\n", buf);
+                    memset(recovery_path, 0, sizeof(char) * 256);
+                    strcat(recovery_path, "/recovery_dir");
+                    mkdir(recovery_path, 0777);
+                    strcat(recovery_path, "/");
+                    strcat(recovery_path, buf);
+                    printf("  [*] recovery path: %s\n", recovery_path);
+
+                    recovery_fp = fopen(recovery_path, "w+");
                 }
             }
             printf("[+] List END.\n");
             closedir(dp);
             fclose(fp);
+            fclose(recovery_fp);
         }
     }
 }
