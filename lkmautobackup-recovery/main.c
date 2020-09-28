@@ -75,7 +75,19 @@ int main()
                     strcat(recovery_path, buf);
                     printf("  [*] recovery path: %s\n", recovery_path);
 
+                    //fclose(fp);
+                    //fp = fopen(fullpath, "r");
+                    
+                    char* data;
+                    char buf4[5] = { 0, };
                     recovery_fp = fopen(recovery_path, "w+");
+                    fseek(recovery_fp, 0, SEEK_SET);
+                    while (feof(fp) == 0)
+                    {
+                        fread(buf4, sizeof(char), 4, fp);
+                        fprintf(recovery_fp, "%s\n", buf4);
+                        memset(buf4,0,5);
+                    }
                 }
             }
             printf("[+] List END.\n");
@@ -84,13 +96,6 @@ int main()
             fclose(recovery_fp);
         }
     }
+
+    return 0;
 }
-
-// char buffer[20] = { 0, };
-// FILE *fp = fopen("hello.txt", "r");
-// fread(buffer, sizeof(buffer), 1, fp);   // hello.txt에서 버퍼 크기(20바이트)만큼 1번 값을 읽음
-// printf("%s\n", buffer);    // Hello, world!: 파일의 내용 출력
-// fclose(fp);    // 파일 포인터 닫기
-
-// return 0;
-// }

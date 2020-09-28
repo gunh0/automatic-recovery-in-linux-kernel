@@ -1,6 +1,6 @@
 import sys,getopt
 
-filename = "/backup2/test"
+filename = "/recovery_dir/open_and_read.py"
 blocksize = 1024
 
 opts,args = getopt.getopt(sys.argv[1:],'f:b:')
