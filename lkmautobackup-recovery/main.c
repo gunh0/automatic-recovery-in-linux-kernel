@@ -24,7 +24,7 @@ int isDirectory(const char *path)
 
 int main()
 {
-    char *dirname = "/backup";
+    char *dirname = "/backup_dir";
     char recovery_path[256];
     char *filename = NULL;
     char fullpath[256];
@@ -60,7 +60,7 @@ int main()
                     char buf[256] = {
                         0,
                     };
-                    fp = fopen(fullpath, "r");
+                    fp = fopen(fullpath, "rb");
                     fread(buf, 4, 1, fp);
 
                     int origin_filename_size = (int)strtol(buf, NULL, 16);
@@ -74,9 +74,6 @@ int main()
                     strcat(recovery_path, "/");
                     strcat(recovery_path, buf);
                     printf("  [*] recovery path: %s\n", recovery_path);
-
-                    //fclose(fp);
-                    //fp = fopen(fullpath, "r");
                     
                     char* data;
                     char buf4[5] = { 0, };
@@ -85,7 +82,7 @@ int main()
                     while (feof(fp) == 0)
                     {
                         fread(buf4, sizeof(char), 4, fp);
-                        fprintf(recovery_fp, "%s\n", buf4);
+                        fprintf(recovery_fp, "%s", buf4);
                         memset(buf4,0,5);
                     }
                 }

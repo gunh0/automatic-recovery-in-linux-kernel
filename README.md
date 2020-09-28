@@ -26,15 +26,35 @@ $ cd auto_recovery_lkm
 $ make
 $ make start
 
+# Only files that exist in the target directory will automatically be backed up when an open action occurs.
+# Recovery cannot proceed simultaneously while backup is taking place.
+
 # Remove Module
+$ make remove
 $ make remove
 
 # Target, Backup directory permisson change
 [localhost /]$ sudo chmod -R 777 target_dir/
 [localhost /]$ sudo chmod -R 777 backup_dir/
+# to do this command
+$ make auth
 ```
 
 <br/>
+
+### # lkmautobackup-recovery
+
+```bash
+# Stop lkm
+$ make rmmod
+
+# move to lkmautobackup-recovery directory
+$ make
+$ make start
+# and check /recovery_dir
+```
+
+
 
 <br/>
 

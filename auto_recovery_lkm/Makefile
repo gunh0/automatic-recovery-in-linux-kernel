@@ -11,6 +11,14 @@ all:
 	sudo mkdir -p \/backup_dir
 	sudo mkdir -p \/target_dir
 
+auth:
+	sudo chmod -R 777 /backup_dir
+	sudo chmod -R 777 /target_dir
+	sudo chmod -R 777 /backup_copy
+
+copy:
+	cp -r /backup_dir /backup_copy
+
 clean:
 	$(MAKE) -C $(KDIR) M=$(PWD) clean
 	
@@ -20,8 +28,12 @@ start:
 	# Display the kernel log
 	dmesg
 
+rmmod:
+	sudo rmmod result_lkm.ko
+
 remove:
 	sudo rm -rf /backup_dir
+	sudo rm -rf /backup_copy
 	sudo rmmod result_lkm.ko
 
 restart:
