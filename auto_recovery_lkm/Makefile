@@ -14,7 +14,7 @@ all:
 auth:
 	sudo chmod -R 777 /backup_dir
 	sudo chmod -R 777 /target_dir
-	sudo chmod -R 777 /backup_copy
+	# sudo chmod -R 777 /backup_copy
 
 copy:
 	cp -r /backup_dir /backup_copy

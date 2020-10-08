@@ -107,9 +107,9 @@ int main()
                     while ((cpyBuf = getc(fp)) != EOF)
                     {
                         file_counter++;
-                        
+
                         // Do not copy until the last "0A" of the backup file.
-                        if(file_counter==(file_size-origin_filename_size-5))
+                        if(file_counter==(file_size-origin_filename_size-4))
                             break;
                         fprintf(recovery_fp, "%c", (char)cpyBuf);
                     }

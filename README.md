@@ -63,6 +63,23 @@ $ make start
 
 ```shell
 $ sha1sum 'target file'
+
+# Example
+# Before
+[root@localhost target_dir]# xxd abc.txt
+0000000: 6464 6464 0a0a                           dddd..
+[root@localhost target_dir]# sha1sum abc.txt
+c393fbd14d89dd594f41ab2cd9023b841a42894f  abc.txt
+
+# After
+[root@localhost recovery_dir]# xxd abc.txt
+0000000: 6464 6464 0a0a                           dddd..
+[root@localhost recovery_dir]# sha1sum abc.txt
+c393fbd14d89dd594f41ab2cd9023b841a42894f  abc.txt
+
+
+
+
 ```
 
 <br/>
