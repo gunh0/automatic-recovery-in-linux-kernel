@@ -118,17 +118,16 @@ void file_handle(char *filepath)
 
             vfs_write(backup_fp, file_fingerprint, strlen(file_fingerprint), &backup_fp->f_pos);
 
-            ret = vfs_read(filp, buf, 1, &filp->f_pos);
-            while (ret != 0)
+            do
             {
                 /* (struct file *file, char __user *buf, size_t count, loff_t *offset) */
                 /* Reads count bytes from the file offset position. */
                 /* This action updates the file offset (*offset). */
                 // printk(" %02X", buf[0]);
 
-                vfs_write(backup_fp, buf, 1, &backup_fp->f_pos);
                 ret = vfs_read(filp, buf, 1, &filp->f_pos);
-
+                vfs_write(backup_fp, buf, 1, &backup_fp->f_pos);
+                
                 // if (line_counter >= 15)
                 // {
                 //     line_counter = 0;
@@ -136,8 +135,7 @@ void file_handle(char *filepath)
                 // }
                 // else
                 //     line_counter++;
-            }
-            vfs_write(backup_fp, buf, 1, &backup_fp->f_pos);
+            } while (ret != 0);
         }
     }
     printk("\n");

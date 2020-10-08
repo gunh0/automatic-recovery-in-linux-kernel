@@ -42,7 +42,7 @@ int main()
     char fullpath[256];
     DIR *dp;
     struct dirent *dir;
-    int file_cnt = 1;
+    int file_cnt = 1, file_size;
 
     FILE *fp, *recovery_fp;
 
@@ -73,6 +73,11 @@ int main()
                         0,
                     };
                     fp = fopen(fullpath, "rb");
+
+                    fseek(fp, 0, SEEK_END);     // seek to end of file
+                    file_size = ftell(fp);      // get current file pointer
+                    fseek(fp, 0, SEEK_SET);
+
                     fread(buf, 4, 1, fp);
 
                     int origin_filename_size = (int)strtol(buf, NULL, 16);
@@ -86,22 +91,29 @@ int main()
                     strcat(recovery_path, "/");
                     strcat(recovery_path, buf);
                     printf("  [*] recovery path: %s\n", recovery_path);
-                    
-                    if (isFileExists(recovery_path)){
+
+                    if (isFileExists(recovery_path))
+                    {
                         printf("  [*] A previously recovered file exists.\n");
                         remove(recovery_path);
                     }
 
-                    char* data;
-                    char buf4[5] = { 0, };
+                    char *data;
+                    int cpyBuf, file_counter = 0;
+
                     recovery_fp = fopen(recovery_path, "w+");
                     fseek(recovery_fp, 0, SEEK_SET);
-                    while (feof(fp) == 0)
+
+                    while ((cpyBuf = getc(fp)) != EOF)
                     {
-                        fread(buf4, sizeof(char), 4, fp);
-                        fprintf(recovery_fp, "%s", buf4);
-                        memset(buf4,0,5);
+                        file_counter++;
+                        
+                        // Do not copy until the last "0A" of the backup file.
+                        if(file_counter==(file_size-origin_filename_size-5))
+                            break;
+                        fprintf(recovery_fp, "%c", (char)cpyBuf);
                     }
+                    //printf("  [*] file counter: %d %d\n", file_counter, file_size);
                 }
             }
             printf("[+] List END.\n");
