@@ -21,26 +21,26 @@ Ransomware Response Automatic Recovery Kernel Module
 # Start Module
 $ git clone https://github.com/devgunho/Automatic_Recovery_In_Linux.git
 $ sudo su
-$ cd Automatic_Recovery_In_Linux
-$ cd auto_recovery_lkm
-$ make
-$ make start
+# cd Automatic_Recovery_In_Linux
+# cd auto_recovery_lkm
+auto_recovery_lkm]# make
+auto_recovery_lkm]# make start
 
 # Only files that exist in the target directory will automatically be backed up when an open action occurs.
 # Recovery cannot proceed simultaneously while backup is taking place.
 
 # Remove Module
-$ make rmmod
+auto_recovery_lkm]# make rmmod
 
 # Target, Backup directory permisson change
 # [localhost /]$ sudo chmod -R 777 target_dir/
 # [localhost /]$ sudo chmod -R 777 backup_dir/
 # to do this command
-$ make auth
+auto_recovery_lkm]# make auth
 
 # Delete All
-$ make remove
-$ make clean
+auto_recovery_lkm]# make remove
+auto_recovery_lkm]# make clean
 ```
 
 <br/>
@@ -49,11 +49,11 @@ $ make clean
 
 ```bash
 # Stop lkm
-$ make rmmod
+auto_recovery_lkm]# make rmmod
 
 # move to lkmautobackup-recovery directory
-$ make
-$ make start
+lkmautobackup-recovery]# make
+lkmautobackup-recovery]# make start
 # and check /recovery_dir
 ```
 
@@ -76,10 +76,6 @@ c393fbd14d89dd594f41ab2cd9023b841a42894f  abc.txt
 0000000: 6464 6464 0a0a                           dddd..
 [root@localhost recovery_dir]# sha1sum abc.txt
 c393fbd14d89dd594f41ab2cd9023b841a42894f  abc.txt
-
-
-
-
 ```
 
 <br/>
