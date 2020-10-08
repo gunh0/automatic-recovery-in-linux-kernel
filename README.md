@@ -30,14 +30,17 @@ $ make start
 # Recovery cannot proceed simultaneously while backup is taking place.
 
 # Remove Module
-$ make remove
-$ make remove
+$ make rmmod
 
 # Target, Backup directory permisson change
-[localhost /]$ sudo chmod -R 777 target_dir/
-[localhost /]$ sudo chmod -R 777 backup_dir/
+# [localhost /]$ sudo chmod -R 777 target_dir/
+# [localhost /]$ sudo chmod -R 777 backup_dir/
 # to do this command
 $ make auth
+
+# Delete All
+$ make remove
+$ make clean
 ```
 
 <br/>
@@ -54,7 +57,13 @@ $ make start
 # and check /recovery_dir
 ```
 
+<br/>
 
+### # Validation
+
+```shell
+$ sha1sum 'target file'
+```
 
 <br/>
 

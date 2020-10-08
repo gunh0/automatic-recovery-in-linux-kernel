@@ -22,6 +22,18 @@ int isDirectory(const char *path)
     return S_ISDIR(statbuf.st_mode);
 }
 
+// Backup File check
+int isFileExists(const char *fpath)
+{
+    FILE *file;
+    if ((file = fopen(fpath, "r")))
+    {
+        fclose(file);
+        return 1;
+    }
+    return 0;
+}
+
 int main()
 {
     char *dirname = "/backup_dir";
@@ -75,6 +87,11 @@ int main()
                     strcat(recovery_path, buf);
                     printf("  [*] recovery path: %s\n", recovery_path);
                     
+                    if (isFileExists(recovery_path)){
+                        printf("  [*] A previously recovered file exists.\n");
+                        remove(recovery_path);
+                    }
+
                     char* data;
                     char buf4[5] = { 0, };
                     recovery_fp = fopen(recovery_path, "w+");
