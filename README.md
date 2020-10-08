@@ -37,7 +37,9 @@ auto_recovery_lkm]# make rmmod
 # [localhost /]$ sudo chmod -R 777 backup_dir/
 # to do this command
 auto_recovery_lkm]# make auth
+```
 
+```bash
 # Delete All
 auto_recovery_lkm]# make remove
 auto_recovery_lkm]# make clean
