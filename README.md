@@ -1,7 +1,7 @@
 # Automatic Recovery In Linux
 Ransomware Response Automatic Recovery Kernel Module
 
-![LKM (EN)](README.assets/LKM (EN).jpg)
+![LKM_EN](README.assets/LKM_EN.jpg)
 
 <br/>
 
